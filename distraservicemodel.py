@@ -22,9 +22,13 @@ class Distra(nn.Module):
         out_fc = self.fc(out_last_step)
 
         return out_fc
+input_size = 13
+hidden_size = 64
+num_layers = 2
+output_size = 1
 
 def load_model():
-    model = Distra()
+    model = Distra(input_size, hidden_size, num_layers, output_size)
     state_dict = torch.load('distra_001.pth')
     model.load_state_dixt(state_dict)
     model.eval()
