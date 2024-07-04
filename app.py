@@ -25,12 +25,11 @@ DEFAULT_LON = 9.7085
 
 model = load_model()
 
-# Streamlit app
-st.title("Rainfall Prediction Dashboard")
+
 
 # Layout: Two columns
-col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
-
+col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
+st.title("resilix")
 with col1:
     # Input: Amount of rainfall
     rainfall_amount = st.number_input("Enter the amount of rainfall (mm):", min_value=0.0, step=0.1)

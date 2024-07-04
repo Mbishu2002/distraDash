@@ -23,7 +23,7 @@ class Distra(nn.Module):
 
         return out_fc
 
-input_size = 13
+input_size = 1
 hidden_size = 64
 num_layers = 2
 output_size = 1
