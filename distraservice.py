@@ -1,5 +1,5 @@
 import torch
-import Distra from distra
+from distra import Distra
 
 def load_model():
     model = Distra()
