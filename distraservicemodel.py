@@ -22,6 +22,7 @@ class Distra(nn.Module):
         out_fc = self.fc(out_last_step)
 
         return out_fc
+
 input_size = 13
 hidden_size = 64
 num_layers = 2
@@ -30,13 +31,22 @@ output_size = 1
 def load_model():
     model = Distra(input_size, hidden_size, num_layers, output_size)
     state_dict = torch.load('distra_001.pth')
-    model.load_state_dixt(state_dict)
+    model.load_state_dict(state_dict)
     model.eval()
     return model
 
 def predict_rainfall(model, rainfall_amount):
     # Prepare input data for the model
-    input_data = torch.tensor([[rainfall_amount]], dtype=torch.float32)
+    input_data = torch.tensor([[rainfall_amount]], dtype=torch.float32).unsqueeze(0)
+
     with torch.no_grad():
         prediction = model(input_data)
-    return prediction.item()  
+        lable = prediction.int()
+        if lable.item() == 1:
+            flood_state = "potential flood"
+        elif lable.item() == 0:
+            flood_state = "no flood"
+        else:
+            flood_state = "unknown"
+
+    return prediction.item(), flood_state
