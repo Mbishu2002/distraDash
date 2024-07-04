@@ -26,11 +26,11 @@ DEFAULT_LON = 9.7085
 model = load_model()
 
 # Layout: Two columns
-col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
-st.set_page_config(layout="wide")
-st.title("Resilix")
+col1, col2 = st.columns([1, 3])  
 
 with col1:
+        # Display map with user's location or default to Cameroon
+    st.subheader("Resilix")
     # Input: Upload file
     uploaded_file = st.file_uploader("Upload a JSON or Excel file with rainfall data", type=["json", "xlsx"])
     
@@ -68,8 +68,6 @@ with col1:
             st.experimental_rerun()
 
 with col2:
-    # Display map with user's location or default to Cameroon
-    st.subheader("Location Map")
     lat, lon = get_ip_location()
     if lat and lon:
         location = pd.DataFrame({
@@ -110,4 +108,4 @@ with col2:
     for alert in dummy_alerts:
         add_alert_to_map(alert)
     
-    st_folium(m, width=1000, height=1000)
+    st_folium(m, width=700, height=500)
