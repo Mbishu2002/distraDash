@@ -25,19 +25,34 @@ DEFAULT_LON = 9.7085
 
 model = load_model()
 
-
-
 # Layout: Two columns
 col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
-st.title("resilix")
-with col1:
-    # Input: Amount of rainfall
-    rainfall_amount = st.number_input("Enter the amount of rainfall (mm):", min_value=0.0, step=0.1)
+st.title("Resilix")
 
-    # Predict and display
-    if st.button("Predict"):
-        prediction = predict_rainfall(model, rainfall_amount)
-        st.write(f"Predicted rainfall outcome: {prediction}")
+with col1:
+    # Input: Upload file
+    uploaded_file = st.file_uploader("Upload a JSON or Excel file with rainfall data", type=["json", "xlsx"])
+    
+    if uploaded_file:
+        if uploaded_file.type == "application/json":
+            data = pd.read_json(uploaded_file)
+        elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+            data = pd.read_excel(uploaded_file)
+        
+        st.write("Uploaded Data:")
+        st.write(data)
+        
+        # Extract rainfall data
+        if 'rainfall' in data.columns and 'date' in data.columns:
+            rainfall_data = data['rainfall'].tolist()
+            
+            if len(rainfall_data) == 13:
+                prediction, flood_state = predict_rainfall(model, rainfall_data)
+                st.write(f"Prediction: {prediction}, Flood State: {flood_state}")
+            else:
+                st.error("The file must contain exactly 13 intervals of rainfall data.")
+        else:
+            st.error("The file must contain 'date' and 'rainfall' columns.")
 
     # Enable live updates
     if st.checkbox("Enable live updates"):
@@ -45,10 +60,10 @@ with col1:
         interval = st.slider("Update interval (seconds):", min_value=1, max_value=10, value=5)
         while st.checkbox("Enable live updates"):  # Check if checkbox is still ticked
             time.sleep(interval)
-            simulated_rainfall = np.random.uniform(0, 100)
-            prediction = predict_rainfall(model, simulated_rainfall)
-            st.write(f"Simulated rainfall amount: {simulated_rainfall} mm")
-            st.write(f"Predicted outcome: {prediction}")
+            simulated_rainfall = np.random.uniform(0, 100, 13).tolist()  # Simulate 13 intervals of data
+            prediction, flood_state = predict_rainfall(model, simulated_rainfall)
+            st.write(f"Simulated rainfall amount: {simulated_rainfall}")
+            st.write(f"Predicted outcome: {prediction}, Flood State: {flood_state}")
             st.experimental_rerun()
 
 with col2:
@@ -94,4 +109,4 @@ with col2:
     for alert in dummy_alerts:
         add_alert_to_map(alert)
     
-    st_folium(m, width=700, height=500)
+    st_folium(m, width='100%', height='100vh')
