@@ -7,7 +7,7 @@ import time
 import asyncio
 import websockets
 import json
-from distraservice import load_model, predict_rainfall
+from distraservicemodel import load_model, predict_rainfall
 import folium
 from streamlit_folium import st_folium
 

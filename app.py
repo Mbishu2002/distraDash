@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import requests
 import time
-from distraservice import load_model, predict_rainfall
+from distraservicemodel import load_model, predict_rainfall
 import folium
 from streamlit_folium import st_folium
 
