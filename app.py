@@ -27,6 +27,7 @@ model = load_model()
 
 # Layout: Two columns
 col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
+st.set_page_config(layout="wide")
 st.title("Resilix")
 
 with col1:
@@ -109,4 +110,4 @@ with col2:
     for alert in dummy_alerts:
         add_alert_to_map(alert)
     
-    st_folium(m, width='100%', height='100vh')
+    st_folium(m, width=1000, height=1000)
