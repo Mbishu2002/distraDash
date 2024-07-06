@@ -25,7 +25,7 @@ DEFAULT_LON = 9.7085
 
 model = load_model()
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Resilix", page_icon="🚨",layout="wide")
 # Layout: Two columns
 col1, col2 = st.columns([1, 3])  
 
