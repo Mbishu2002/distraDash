@@ -31,7 +31,7 @@ col1, col2 = st.columns([1, 3])
 
 with col1:
         # Display map with user's location or default to Cameroon
-    st.subheader("Resilix")
+    st.subheader("Resilix" icon="🚨")
     # Input: Upload file
     uploaded_file = st.file_uploader("Upload a JSON or Excel file with rainfall data", type=["json", "xlsx"])
     
