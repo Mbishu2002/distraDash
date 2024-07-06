@@ -60,21 +60,10 @@ with st.sidebar:
             st.experimental_rerun()
 
 # Layout: Two columns
-col1, col2 = st.columns([2, 3])  # Adjust the ratio as needed
+col1, col2 = st.columns([4, 1])  
+
 
 with col1:
-    st.subheader("Alerts")
-
-    # Placeholder for alerts
-    if 'alerts' not in st.session_state:
-        st.session_state.alerts = []
-
-    for i, alert in enumerate(st.session_state.alerts):
-        st.write(f"Alert {i+1}: {alert['message']}")
-        if st.button(f"Raise Emergency for Alert {i+1}", key=f"emergency_{i}"):
-            st.write(f"Emergency raised for Alert {i+1}")
-
-with col2:
     st.subheader("Location Map")
     
     # Create map with static location
@@ -110,4 +99,16 @@ with col2:
     for alert in dummy_alerts:
         add_alert_to_map(alert)
     
-    st_folium(m, width=800, height=600)
+    st_folium(m, width=800, height=500)
+    
+with col2:
+    st.subheader("Alerts")
+
+    # Placeholder for alerts
+    if 'alerts' not in st.session_state:
+        st.session_state.alerts = []
+
+    for i, alert in enumerate(st.session_state.alerts):
+        st.write(f"Alert {i+1}: {alert['message']}")
+        if st.button(f"Raise Emergency for Alert {i+1}", key=f"emergency_{i}"):
+            st.write(f"Emergency raised for Alert {i+1}")
